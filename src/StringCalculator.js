@@ -7,7 +7,7 @@ class StringCalculator {
         let delimiter = /[,\:]/;
         let numbersText = text;
 
-        const customDelimiterMatch = text.match(/^\/\/(.)\n(.*)/);
+        const customDelimiterMatch = text.match(/^\/\/(.)\\n(.*)/);
         if (customDelimiterMatch) {
             const customDelimiter = customDelimiterMatch[1];
             delimiter = new RegExp(this.escapeRegExp(customDelimiter));
@@ -16,7 +16,6 @@ class StringCalculator {
 
         const numbers = numbersText.split(delimiter).map(Number);
 
-        // Validate the numbers after parsing
         this.validateNumbers(numbers);
 
         return numbers.reduce((sum, num) => sum + num, 0);

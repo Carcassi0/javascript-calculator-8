@@ -4,10 +4,24 @@ class StringCalculator {
             return 0;
         }
 
-        const delimiter = /[,\:]/;
-        const numbers = text.split(delimiter).map(Number);
+        let delimiter = /[,\:]/;
+        let numbersText = text;
+
+        const customDelimiterMatch = text.match(/^\/\/(.)\n(.*)/);
+        if (customDelimiterMatch) {
+            const customDelimiter = customDelimiterMatch[1];
+
+            delimiter = new RegExp(this.escapeRegExp(customDelimiter));
+            numbersText = customDelimiterMatch[2];
+        }
+
+        const numbers = numbersText.split(delimiter).map(Number);
 
         return numbers.reduce((sum, num) => sum + num, 0);
+    }
+
+    escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 }
 
